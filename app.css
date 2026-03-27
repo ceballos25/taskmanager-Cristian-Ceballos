@@ -1,0 +1,72 @@
+body{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.title{
+    text-align: center;
+    margin-top: 55px;
+}
+
+.sub__title{
+    text-align: center;
+    display: flex; 
+    justify-content: center;
+    margin: 20px;
+}
+
+.form__todo__list{
+    display: flex;
+    justify-content: center;
+    margin: 20px;    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Alertas */
+#alert-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: auto;
+}
+
+.alert {
+  padding: 12px 20px;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 500;
+  margin-bottom: 10px;
+  min-width: 250px;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Tipos */
+.alert-success { background: #28a745; }
+.alert-error { background: #dc3545; }
+.alert-warning { background: #ffc107; color: #000; }
+
+/* Animación */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

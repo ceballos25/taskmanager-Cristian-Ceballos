@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="app.css">
+</head>
+
+<body>
+    <h1 class="title">To Do list 📋</h1>
+    <small class="sub__title">Hola, 👋 ¿estás listo(a), para organizar tus tareas?</small>
+    <div class="form__todo__list">
+        <form id="form">
+            <input class="input__task" type="text" id="task-input" placeholder="Escribe una tarea..." />
+            <button class="button__aadTask" type="submit">Agregar</button>
+        </form>
+
+        <ul id="task-list"></ul>
+    </div>
+    <div id="alert-container"></div>
+    <script src="app.js"></script>
+</body>
+
+</html>
