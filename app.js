@@ -4,11 +4,21 @@ const taskList = document.getElementById("task-list");
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
+function showAlert({ type, message }) {
+  Swal.fire({
+    toast: true,
+    position: 'top-end',
+    icon: type,
+    title: message,
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true
+  });
+}
 
 function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
-
 
 function renderTasks() {
   taskList.innerHTML = "";
@@ -28,29 +38,37 @@ function renderTasks() {
       <button data-id="${index}" class="delete-btn">❌</button>
     `;
 
-    // Marcar como completada
     li.querySelector("span").addEventListener("click", () => {
       tasks[index].completed = !tasks[index].completed;
       saveTasks();
       renderTasks();
     });
 
-    // Eliminar tarea
     li.querySelector(".delete-btn").addEventListener("click", () => {
-      tasks.splice(index, 1);
-      saveTasks();
-      renderTasks();
+      Swal.fire({
+        title: '¿Eliminar tarea?',
+        text: "No podrás recuperarla",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          tasks.splice(index, 1);
+          saveTasks();
+          renderTasks();
 
-      showAlert({
-        type: "warning",
-        message: "Tarea eliminada"
+          showAlert({
+            type: "success",
+            message: "Tarea eliminada"
+          });
+        }
       });
     });
 
     taskList.appendChild(li);
   });
 }
-
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
