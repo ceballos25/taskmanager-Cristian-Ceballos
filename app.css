@@ -21,6 +21,44 @@ body{
 }
 
 
+.input__task {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button__aadTask {
+  padding: 8px 12px;
+  margin-left: 5px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#task-list {
+  margin-top: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+#task-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f4f4f4;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+
+#task-list button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 
 
 

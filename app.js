@@ -1,45 +1,85 @@
-function showAlert({ type = "success", message = "", duration = 3000 }) {
-  const container = document.getElementById("alert-container");
+const form = document.getElementById("form");
+const input = document.getElementById("task-input");
+const taskList = document.getElementById("task-list");
 
-  if (!container) {
-    console.warn("No existe #alert-container en el DOM");
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+
+function renderTasks() {
+  taskList.innerHTML = "";
+
+  if (tasks.length === 0) {
+    taskList.innerHTML = "<p>No hay tareas aún</p>";
     return;
   }
 
-  // Crear alerta
-  const alertElement = document.createElement("div");
+  tasks.forEach((task, index) => {
+    const li = document.createElement("li");
 
-  // Clases dinámicas
-  alertElement.classList.add("alert", `alert-${type}`);
+    li.innerHTML = `
+      <span style="cursor:pointer; text-decoration: ${task.completed ? "line-through" : "none"}">
+        ${task.text}
+      </span>
+      <button data-id="${index}" class="delete-btn">❌</button>
+    `;
 
-  // Contenido
-  alertElement.textContent = message;
+    // Marcar como completada
+    li.querySelector("span").addEventListener("click", () => {
+      tasks[index].completed = !tasks[index].completed;
+      saveTasks();
+      renderTasks();
+    });
 
-  // Insertar en el DOM
-  container.appendChild(alertElement);
+    // Eliminar tarea
+    li.querySelector(".delete-btn").addEventListener("click", () => {
+      tasks.splice(index, 1);
+      saveTasks();
+      renderTasks();
 
-  // Auto eliminar
-  setTimeout(() => {
-    alertElement.style.opacity = "0";
-    alertElement.style.transform = "translateY(-10px)";
-    
-    setTimeout(() => {
-      alertElement.remove();
-    }, 300);
-  }, duration);
+      showAlert({
+        type: "warning",
+        message: "Tarea eliminada"
+      });
+    });
+
+    taskList.appendChild(li);
+  });
 }
 
-showAlert({
-  type: "success",
-  message: "Compra realizada correctamente"
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const value = input.value.trim();
+
+  if (!value) {
+    showAlert({
+      type: "error",
+      message: "La tarea está vacía"
+    });
+    return;
+  }
+
+  const newTask = {
+    text: value,
+    completed: false
+  };
+
+  tasks.push(newTask);
+  saveTasks();
+  renderTasks();
+
+  input.value = "";
+
+  showAlert({
+    type: "success",
+    message: "Tarea agregada"
+  });
 });
 
-// showAlert({
-//   type: "error",
-//   message: "Ocurrió un error"
-// });
-
-// showAlert({
-//   type: "warning",
-//   message: "Cuidado con esto"
-// });
+renderTasks();
